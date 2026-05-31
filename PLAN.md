@@ -2,6 +2,21 @@ To transform the lightweight **Gemma 3 270M** into a production-grade music comp
 
 Because you have an endless supply of perfect, lossless 2-way MIDI-to-MIDIText data, your task is fundamentally a **Domain-Specific Continual Pre-training** project rather than a simple instruction-following fine-tune.
 
+MIDIText Source: file:///media/jang/home/Deve/zenmidi/pkg/miditext/
+MIDIText Notation: file:///media/jang/home/Deve/zenmidi/pkg/miditext/MIDITEXT_NOTATION_SKILL.md
+Professional MIDI datasets:
+file:///media/jang/home/Deve/midi/ninsheetmusic/ - Simple but very high quality, good for fast generation. It is also small enough to be processed.
+file:///media/jang/home/Deve/midi/vgmusic/ - Video games, old, but very good in terms of structure and harmony.
+file:///media/jang/home/Deve/midi/vgmusicnew/ - New video games, very high quality.
+file:///media/jang/home/Deve/midi/khinsider - Huge collection of video game music.
+file:///media/jang/home/Deve/midi/downloaded/ - MIDI files downloaded from various sources.
+file:///media/jang/home/Deve/midi/transcribed/ - Extremely high quality performance from Youtuber and professional, totally humanized performance.
+file:///media/jang/home/Deve/midi/netcavy/
+file:///media/jang/home/Deve/midi/musescore - Giant database of millions of professional grade MIDI scores.
+file:///media/jang/home/Deve/midi/midishow - Chinese made MIDI scores.
+
+With those, we need to import /media/jang/home/Deve/zenmidi/pkg/miditext/ to convert them to MIDIText to create our training dataset.
+
 ---
 
 ## Phase 1: Data Architecture & Tokenizer Optimization
