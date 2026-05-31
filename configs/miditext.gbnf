@@ -1,0 +1,41 @@
+# MIDIText GBNF Grammar for llama.cpp Constrained Decoding
+
+root ::= metadata? score
+
+# Optional Metadata prefix for Stage 2
+metadata ::= "<|tracks:" [1-9] "|><|tempo:" [1-9] [0-9]? [0-9]? "|><|bars:" [1-9] [0-9]? [0-9]? "|>"
+
+# The main score block
+score ::= "<|score|>\n" header tracks "<|end|>"
+
+# Score Header (PPQ, Tempo, optional TS)
+header ::= "PPQ:" ("480" | "960" | "1024" | "120" | "240") "\n" tempo_sig ts_sig? "\n"
+tempo_sig ::= "t" [1-9] [0-9]? [0-9]? "." [0-9] [0-9] " " ("t" [1-9] [0-9]? [0-9]? "." [0-9] [0-9] " ")*
+ts_sig ::= "TS(" ("4/4" | "3/4" | "6/8" | "2/4" | "12/8") ")"
+
+# Tracks/Voices
+tracks ::= voice_line+
+voice_line ::= "V:" [1-9] [0-9]? " " (token " ")* "\n"
+
+# Allowed tokens in voice line
+token ::= note | chord | rest | pitch_mod | pos_mod | vel_mod | bar_line
+
+# Individual note: optional velocity/octave + pitch + modifier + optional duration
+note ::= pitch modifier? duration?
+chord ::= "[" (pitch modifier? " ")* pitch modifier? "]" duration?
+
+# Rest note
+rest ::= ("r" | "R") duration?
+
+# Pitch characters, octaves, velocities
+pitch ::= [a-g]
+modifier ::= [#_\-+\'^,]
+duration ::= [0-9]+ ("/" [0-9]+)?
+
+# Modifier changes
+pitch_mod ::= "o" [0-9]
+pos_mod ::= "@" [0-9]+
+vel_mod ::= "v" [0-9]+
+
+# Bar line marker
+bar_line ::= "|"
