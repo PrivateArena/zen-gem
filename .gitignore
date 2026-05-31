@@ -55,3 +55,4 @@ sfizz.log
 node_modules/
 *.log
 scratch/
+data/
